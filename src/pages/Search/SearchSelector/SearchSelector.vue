@@ -14,11 +14,14 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
+    <!-- 平台售卖属性的地方 -->
     <div class="type-wrap" v-for="(attr,index) in attrsList " :key="attr.attrId">
+      <!-- 平台售卖属性：比如说颜色 -->
       <div class="fl key">{{attr.attrName}}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
+          <!-- 平台相应售卖的属性的属性值；粉色，黑色， -->
+          <li v-for="(attrValue,index) in attr.attrValueList" :key="attrValue" @click="attrInfo(attr,attrValue)">
             <a>{{attrValue}}</a>
           </li>
 
@@ -42,6 +45,11 @@ import {mapGetters} from 'vuex'
       tradeMatkHandler(trademark){
         //点击了品牌，还是需要整理参数，向服务器发起请求获取相应的数据进行展示 --自定义事件
         this.$emit('trademarkInfo',trademark)
+      },
+      //平台售卖属性的点击事件
+      attrInfo(attr,attrValue){
+        console.log(attr);
+        this.$emit('attrInfo',attr,attrValue)
       }
     }
   }
