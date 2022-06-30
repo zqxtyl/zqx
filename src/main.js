@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import App from './App.vue';
-//三级联动组件--全局
+//三级联动组件--全局组件  在任何组件当中都可以使用
 import TypeNav from '@/components/TypeNav'
 import Carousel from '@/components/Carousel'
+import Pagination from '@/components/Pagination'
 //全局组件的名字：哪一个组件
 Vue.component(TypeNav.name,TypeNav)
 Vue.component(Carousel.name,Carousel)
+Vue.component(Pagination.name,Pagination)
 
 //引入路由
 import router from '@/router';
