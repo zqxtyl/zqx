@@ -71,16 +71,14 @@
           <!-- 销售产品列表 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li
-                class="yui3-u-1-5"
-                v-for="(good, index) in goodsList"
-                :key="good.id"
-              >
+              <li class="yui3-u-1-5"
+                v-for="(good, index) in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
-                      <img :src="good.defaultImg"
-                    /></a>
+                    <!-- 在路由跳转的时候切记别忘记带id（params）参数 -->
+                    <router-link :to="`/detail/${good.id}`">
+                      <img :src="good.defaultImg"/>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -115,7 +113,7 @@
             </ul>
           </div>
           <!-- 分页器 -->
-          <Pagination />
+          <Pagination :pageNo='searchParams.pageNo' :pageSize='searchParams.pageSize' :total='total' :continues='5' @getPageNo='getPageNo'/>
         </div>
       </div>
     </div>
@@ -124,7 +122,7 @@
 
 <script>
 import SearchSelector from './SearchSelector/SearchSelector';
-import { mapGetters } from 'vuex';
+import { mapGetters,mapState } from 'vuex';
 
 export default {
   name: 'Search',
@@ -147,7 +145,7 @@ export default {
         //排序
         order: '1:desc',
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 4,
         props: [],
         trademark: '',
       },
@@ -181,6 +179,10 @@ export default {
     isDesc() {
       return this.searchParams.order.indexOf('desc') != -1;
     },
+    //获取search模块一共多少数据
+    ...mapState({
+      total:state=>state.search.searchList.total
+    })
   },
   methods: {
     //向服务器发送请求search模块
@@ -260,6 +262,13 @@ export default {
       this.searchParams.order = newOrder;
       this.getData();
     },
+    //自定义事件的回调函数--获取当前第几页
+    getPageNo(pageNo){
+      //整理带给服务器参数
+      this.searchParams.pageNo=pageNo
+      //再次发送请求
+      this.getData()
+    }
   },
   //数据监听： 监听组件实例身上的属性的属性值变化
   watch: {

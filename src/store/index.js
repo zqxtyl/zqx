@@ -5,6 +5,8 @@ Vue.use(Vuex)
 
 import home from './home'
 import search from './search'
+import detail  from './detail'
+
 //state 仓库存储数据的地方
 
 // mutations 修改state的唯一手段
@@ -17,6 +19,7 @@ import search from './search'
 export default new Vuex.Store({
     modules:{
         home,
-        search
+        search,
+        detail
     }
 })
