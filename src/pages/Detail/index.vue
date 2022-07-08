@@ -419,6 +419,7 @@ export default {
         });
         //路由跳转
         //在路由跳转的时候还需要将产品的信息带给下一个组件
+        sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
         this.$router.push({name:'addcartsuccess',query:{skuNum:this.skuNum}})
       } catch (error) {
         alert(error.message)
